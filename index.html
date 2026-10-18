@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursos Online | Aprendé desde cero</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#172b24;background:#fff}
+header{padding:18px 6%;font-weight:bold;color:#087747}
+section{padding:38px 20px;max-width:900px;margin:auto}
+.hero{text-align:center;background:#f0faf3;padding-top:55px;padding-bottom:55px}
+.tag{color:#087747;font-weight:bold;font-size:13px}
+h1{font-size:clamp(32px,7vw,48px);margin:15px 0}
+h2{font-size:28px}
+p{line-height:1.6;color:#53645b}
+.price{font-size:38px;font-weight:bold;margin:18px}
+button{border:0;border-radius:10px;padding:15px 20px;font-size:15px;font-weight:bold;cursor:pointer;width:100%;max-width:390px}
+.primary{background:#087747;color:white}
+.secondary{background:white;border:1px solid #087747;color:#087747}
+.card{max-width:520px;margin:20px auto;padding:25px;border:1px solid #dcebe0;border-radius:18px;box-shadow:0 8px 25px #163b1910}
+ul{padding-left:20px;line-height:2}
+.actions{display:grid;gap:12px;justify-items:center;margin-top:24px}
+.discount{display:inline-block;background:#e2f7e8;color:#087747;padding:7px 12px;border-radius:20px;font-weight:bold}
+.old{text-decoration:line-through;color:#89948d;font-size:18px}
+input{width:100%;padding:14px;margin:8px 0;border:1px solid #ccd8cf;border-radius:8px;font-size:16px}
+.total{background:#f0faf3;padding:18px;border-radius:12px;font-weight:bold;font-size:22px}
+.hidden{display:none}
+footer{text-align:center;padding:25px;color:#78847d;font-size:13px}
+</style>
+</head>
+<body>
+<header>CURSOS ONLINE 💚</header>
+
+<main>
+<section id="home" class="hero">
+  <span class="tag">CURSO ONLINE PARA PRINCIPIANTES</span>
+  <h1>Aprendé Excel<br>desde cero</h1>
+  <p>Aprendé a usar Excel a tu ritmo y aplicalo en tu trabajo, tus estudios o tu emprendimiento.</p>
+  <ul style="display:inline-block;text-align:left">
+    <li>Clases paso a paso</li>
+    <li>Ejercicios prácticos</li>
+    <li>Acceso online</li>
+  </ul>
+  <div class="price">$3.000</div>
+  <button class="primary" onclick="show('word')">QUIERO MI CURSO DE EXCEL →</button>
+</section>
+
+<section id="word" class="hidden" style="text-align:center">
+  <span class="tag">🎁 DESCUENTO EXCLUSIVO</span>
+  <h2>¡Esperá! Completá tu formación</h2>
+  <p>Por comprar Excel, podés sumar estos dos cursos a un precio especial.</p>
+  <div class="card">
+    <h2>Word + PowerPoint</h2>
+    <span class="discount">20% DE DESCUENTO</span>
+    <p class="old">Precio normal: $10.000</p>
+    <div class="price">$8.000</div>
+    <p>Aprendé a crear documentos y presentaciones.</p>
+    <div class="actions">
+      <button class="primary" onclick="show('powerbi');addOffice()">SÍ, AGREGAR WORD + POWERPOINT</button>
+      <button class="secondary" onclick="checkout()">No, gracias. Continuar al pago</button>
+    </div>
+  </div>
+</section>
+
+<section id="powerbi" class="hidden" style="text-align:center">
+  <span class="tag">⭐ ÚLTIMA OFERTA</span>
+  <h2>¡Tu última oportunidad!</h2>
+  <p>Sumá Power BI y aprendé a transformar datos en gráficos e informes.</p>
+  <div class="card">
+    <h2>Power BI Inicial</h2>
+    <span class="discount">30% DE DESCUENTO</span>
+    <p class="old">Precio normal: $7.000</p>
+    <div class="price">$4.900</div>
+    <div class="actions">
+      <button class="primary" onclick="addBI();checkout()">SÍ, AGREGAR POWER BI</button>
+      <button class="secondary" onclick="checkout()">No, gracias. Ir al pago</button>
+    </div>
+  </div>
+</section>
+
+<section id="checkout" class="hidden">
+  <h2>Finalizá tu compra</h2>
+  <p>Revisá tus cursos y completá tus datos.</p>
+  <div class="card">
+    <div id="items"></div>
+    <p class="total">Total: <span id="total">$3.000</span></p>
+    <form onsubmit="pay(event)">
+      <label>Nombre y apellido</label>
+      <input id="name" autocomplete="name" required>
+      <label>Correo electrónico</label>
+      <input id="email" type="email" autocomplete="email" required>
+      <button class="primary" type="submit">CONTINUAR CON MERCADO PAGO →</button>
+    </form>
+    <p style="font-size:12px">Prototipo de prueba: todavía no se realizan cobros.</p>
+  </div>
+</section>
+
+<section id="result" class="hidden" style="text-align:center">
+  <h2>¡Excelente!</h2>
+  <p id="message"></p>
+</section>
+</main>
+
+<footer>© Cursos Online · Aprendé a tu ritmo</footer>
+
+<script>
+let office=false, bi=false;
+function show(id){
+  ['home','word','powerbi','checkout','result'].forEach(x=>
+    document.getElementById(x).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function addOffice(){office=true}
+function addBI(){bi=true}
+function checkout(){
+  show('checkout');
+  let html='<p>✅ Excel Inicial — $3.000</p>';
+  let total=3000;
+  if(office){html+='<p>✅ Word + PowerPoint — $8.000</p>';total+=8000}
+  if(bi){html+='<p>✅ Power BI Inicial — $4.900</p>';total+=4900}
+  document.getElementById('items').innerHTML=html;
+  document.getElementById('total').textContent=
+    '$'+total.toLocaleString('es-AR');
+}
+function pay(e){
+  e.preventDefault();
+  show('result');
+  document.getElementById('message').textContent=
+    '¡Gracias, '+document.getElementById('name').value+
+    '! Esta es una prueba. Todavía falta conectar Mercado Pago para cobrar.';
+}
+</script>
+</body>
+</html>
